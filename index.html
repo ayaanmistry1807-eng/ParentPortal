@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Parent Hub – Login</title>
+
+<link rel="stylesheet" href="style.css" />
+
+<!-- Firebase v9 compat -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+<script src="firebase.js"></script>
+<script src="app.js" defer></script>
+
+<style>
+/* MODERN LOGIN PAGE */
+.login-shell {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0b74ff, #084eb1);
+  padding: 20px;
+}
+
+.login-left {
+  flex: 1;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 40px;
+}
+
+.login-left h1 {
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.login-left p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.login-right {
+  width: 420px;
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  animation: fadeIn 0.4s ease;
+}
+
+.role-btn {
+  width: 100%;
+  padding: 12px;
+  background: #0b74ff;
+  color: white;
+  border: none;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.role-btn:hover {
+  background: #084eb1;
+}
+
+.login-form {
+  display: none;
+  margin-top: 10px;
+}
+
+.login-form.active {
+  display: block;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 1px solid #d5e3ff;
+}
+
+.submit-btn {
+  background: #084eb1;
+  color: white;
+  width: 100%;
+  padding: 12px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.submit-btn:hover {
+  background:#063a8e;
+}
+
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(10px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@media(max-width:900px){
+  .login-shell {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+  .login-left {
+    padding: 0;
+  }
+  .login-right {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="login-shell">
+
+  <!-- LEFT SIDE -->
+  <div class="login-left">
+    <h1>Parent Hub</h1>
+    <p>Your School’s Modern Attendance & Communication System</p>
+  </div>
+
+  <!-- RIGHT SIDE: LOGIN CARD -->
+  <div class="login-right">
+
+    <h2 style="text-align:center; margin-bottom:15px;">Choose Login Type</h2>
+
+    <button class="role-btn" onclick="showForm('adminForm')">Admin Login</button>
+    <button class="role-btn" onclick="showForm('teacherForm')">Teacher Login</button>
+    <button class="role-btn" onclick="showForm('parentForm')">Parent Login</button>
+
+    <!-- ADMIN FORM -->
+    <form id="adminForm" class="login-form" onsubmit="loginUser(event, 'admin')">
+      <h3>Admin Login</h3>
+      <input id="adminEmail" class="input" type="email" placeholder="Admin Email" required>
+      <input id="adminPass" class="input" type="password" placeholder="Password" required>
+      <button class="submit-btn">Login</button>
+    </form>
+
+    <!-- TEACHER FORM -->
+    <form id="teacherForm" class="login-form" onsubmit="loginUser(event, 'teacher')">
+      <h3>Teacher Login</h3>
+      <input id="teacherEmail" class="input" type="email" placeholder="Teacher Email" required>
+      <input id="teacherPass" class="input" type="password" placeholder="Password" required>
+      <button class="submit-btn">Login</button>
+    </form>
+
+    <!-- PARENT FORM -->
+    <form id="parentForm" class="login-form" onsubmit="loginUser(event, 'parent')">
+      <h3>Parent Login</h3>
+      <input id="parentEmail" class="input" type="email" placeholder="Parent Email" required>
+      <input id="parentPass" class="input" type="password" placeholder="Password" required>
+      <button class="submit-btn">Login</button>
+    </form>
+
+  </div>
+</div>
+
+<script>
+// form show/hide
+function showForm(id){
+  document.querySelectorAll(".login-form").forEach(f => f.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+</script>
+
+</body>
+</html>
+

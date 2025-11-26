@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Teacher • Parent Hub</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script src="firebase.js"></script>
+  <script src="app.js" defer></script>
+  <script src="teacher.js" defer></script>
+</head>
+<body>
+  <div class="admin-shell">
+    <aside class="sidebar">
+      <div class="brand"><h1>Parent Hub</h1><small class="muted">Teacher Panel</small></div>
+      <nav class="menu">
+        <button class="menu-btn active" data-panel="overview">Overview</button>
+        <button class="menu-btn" data-panel="attendance">Attendance</button>
+        <button class="menu-btn" data-panel="marks">Marks</button>
+        <button class="menu-btn" data-panel="notices">Notices</button>
+      </nav>
+      <div class="sidebar-foot"><button class="btn ghost" onclick="doLogout()">Logout</button></div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div><h2 id="tName">Teacher</h2><p id="tEmail" class="muted"></p></div>
+      </header>
+
+      <section class="panel-wrap">
+        <section class="panel active-panel" id="panel-overview"><div class="panel-sm"><h3>Your Classes</h3><ul id="teacherClasses" class="list"></ul></div></section>
+
+        <section class="panel" id="panel-attendance">
+          <div class="panel-sm">
+            <h3>Mark Attendance</h3>
+            <div class="form-row">
+              <select id="attClass" class="input"></select>
+              <input id="attDate" type="date" class="input" />
+              <button class="btn" id="loadAttBtn">Load</button>
+            </div>
+            <div id="attendanceArea" style="margin-top:12px"></div>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-marks">
+          <div class="panel-sm">
+            <h3>Submit Marks (Simple)</h3>
+            <div class="form-row">
+              <select id="marksClass" class="input"></select>
+              <input id="examName" class="input" placeholder="Exam name" />
+              <input id="maxMarks" class="input" type="number" placeholder="Max marks" />
+              <button class="btn" id="loadMarksBtn">Load Students</button>
+            </div>
+            <div id="marksStudents" style="margin-top:12px"></div>
+            <div class="actions" style="margin-top:10px"><button class="btn success" id="submitMarksBtn">Submit Marks</button></div>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-notices">
+          <div class="panel-sm">
+            <h3>Send Notice</h3>
+            <div class="form-row"><select id="noticeClass" class="input"></select></div>
+            <textarea id="noticeText" class="input" placeholder="Write notice..."></textarea>
+            <div class="actions" style="margin-top:10px"><button class="btn" id="sendNoticeBtn">Send Notice</button></div>
+            <h4 style="margin-top:14px">Recent Notices</h4><div id="noticeList"></div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <!-- WhatsApp modal (same as earlier) -->
+  <div id="waModal" class="modal hidden">
+    <div class="modal-card" style="max-width:560px;">
+      <h3 id="waModalTitle">Absent Students — Send WhatsApp</h3>
+      <div id="waModalBody" style="max-height:320px; overflow:auto; margin-top:10px;"></div>
+      <div style="margin-top:12px;">
+        <label style="font-weight:700; display:block; margin-bottom:6px;">Message template (editable)</label>
+        <textarea id="waMessageTemplate" class="input" style="height:80px;">Dear Parent, your child {student} was absent on {date}. - {teacher}</textarea>
+      </div>
+      <div class="modal-actions" style="margin-top:12px;">
+        <button class="btn ghost" id="waModalClose">Close</button>
+        <button class="btn primary" id="waSendAll">Open all WhatsApp chats</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // panel nav
+  const tMenuBtns = Array.from(document.querySelectorAll(".menu-btn"));
+  const tPanels = Array.from(document.querySelectorAll(".panel"));
+  tMenuBtns.forEach(btn=>btn.addEventListener("click", ()=>{ tMenuBtns.forEach(b=>b.classList.remove("active")); btn.classList.add("active"); const panelName = btn.dataset.panel; tPanels.forEach(p=> p.classList.toggle("active-panel", p.id === `panel-${panelName}`)); }));
+  </script>
+</body>
+</html>

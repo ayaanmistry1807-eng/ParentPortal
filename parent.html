@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Parent • Parent Hub</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script src="firebase.js"></script>
+  <script src="app.js" defer></script>
+  <script src="parent.js" defer></script>
+</head>
+<body>
+  <div class="parent-wrap">
+    <div class="parent-card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><h2 id="pName">Parent Portal</h2><p id="pEmail" class="small-muted"></p></div>
+        <div><button class="btn ghost" onclick="doLogout()">Logout</button></div>
+      </div>
+    </div>
+
+    <div class="parent-card"><h3>Your Child</h3><div id="childInfo" class="muted">Loading…</div></div>
+    <div class="parent-card"><h3>Attendance (recent)</h3><div id="attendanceView" class="muted">Loading…</div></div>
+    <div class="parent-card"><h3>Marks</h3><div id="marksView" class="muted">Loading…</div></div>
+    <div class="parent-card"><h3>Notices</h3><div id="noticeView" class="muted">Loading…</div></div>
+  </div>
+</body>
+</html>

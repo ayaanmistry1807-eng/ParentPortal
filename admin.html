@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin • Parent Hub</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script src="firebase.js"></script>
+  <script src="app.js" defer></script>
+  <script src="admin.js" defer></script>
+</head>
+<body>
+  <div class="admin-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>Parent Hub</h1>
+        <small class="muted">Admin Console</small>
+      </div>
+      <nav class="menu">
+        <button class="menu-btn active" data-panel="dashboard">Dashboard</button>
+        <button class="menu-btn" data-panel="teachers">Teachers</button>
+        <button class="menu-btn" data-panel="parents">Parents</button>
+        <button class="menu-btn" data-panel="classes">Classes</button>
+        <button class="menu-btn" data-panel="students">Students</button>
+        <button class="menu-btn" data-panel="assign">Assign</button>
+        <button class="menu-btn" data-panel="attendance">Attendance</button>
+      </nav>
+      <div class="sidebar-foot">
+        <button class="btn ghost" onclick="doLogout()">Logout</button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div>
+          <h2 id="adminTitle">Welcome, Admin</h2>
+          <p id="adminEmail" class="muted"></p>
+        </div>
+        <div class="top-actions">
+          <button class="btn small" id="openCreateAdmin">New Admin</button>
+        </div>
+      </header>
+
+      <section class="panel-wrap">
+        <section class="panel active-panel" id="panel-dashboard">
+          <div class="cards-row">
+            <div class="card"><div class="card-head">Teachers</div><div class="card-value" id="totalTeachers">—</div></div>
+            <div class="card"><div class="card-head">Parents</div><div class="card-value" id="totalParents">—</div></div>
+            <div class="card"><div class="card-head">Students</div><div class="card-value" id="totalStudents">—</div></div>
+            <div class="card"><div class="card-head">Classes</div><div class="card-value" id="totalClasses">—</div></div>
+          </div>
+
+          <div class="panel-sm">
+            <h3>Quick actions</h3>
+            <div class="actions">
+              <button class="btn success" id="openAddTeacher">Add Teacher</button>
+              <button class="btn success" id="openAddParent">Add Parent</button>
+              <button class="btn" id="openAddClass">Add Class</button>
+              <button class="btn" id="openAddStudent">Add Student</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-teachers">
+          <div class="panel-sm">
+            <h3>Teachers</h3>
+            <div id="teacherListArea" class="list-area"></div>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-parents">
+          <div class="panel-sm">
+            <h3>Parents</h3>
+            <div id="parentListArea" class="list-area"></div>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-classes">
+          <div class="panel-sm">
+            <h3>All Classes</h3>
+            <div id="classListArea" class="list-area"></div>
+            <div class="form-row" style="margin-top:12px">
+              <input id="cName" class="input" placeholder="e.g. FE-A" />
+              <button class="btn" id="createClassBtn">Create</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-students">
+          <div class="panel-sm">
+            <h3>Students</h3>
+            <div id="studentsArea" class="list-area"></div>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-assign">
+          <div class="panel-sm">
+            <h3>Assign Classes to Teacher</h3>
+            <div class="form-row">
+              <select id="selectTeacher" class="input"></select>
+              <select id="selectClass" class="input"></select>
+              <button class="btn primary" id="assignBtn">Assign</button>
+            </div>
+            <h4 style="margin-top:12px">Assigned</h4>
+            <ul id="assignedList" class="list"></ul>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-attendance">
+          <div class="panel-sm">
+            <h3>Attendance Reports</h3>
+            <div class="form-row">
+              <select id="attClassViewer" class="input"></select>
+              <input id="attDateViewer" type="date" class="input" />
+              <button class="btn" id="viewAttendanceBtn">View</button>
+            </div>
+            <div id="attendanceViewerArea" style="margin-top:12px;"></div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-card">
+      <h3 id="modalTitle">Modal</h3>
+      <div id="modalBody"></div>
+      <div class="modal-actions">
+        <button class="btn ghost" id="modalClose">Close</button>
+        <button class="btn primary" id="modalSave">Save</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
